@@ -1,0 +1,12 @@
+uk:
+  hello: "Привіт, світ"
+  pages:
+    home:
+      title: "TaxMate — Привіт, світ"
+      greeting: "Привіт, світ! 👋"
+      subtitle: "Rails-застосунок TaxMate — Turbo + Stimulus + Vue + Vite + SCSS."
+      locale_label: "Мова"
+      turbo_hint: "Цей блок ліниво завантажується через Turbo Frame."
+      loading: "Завантаження…"
+      time_now: "Час сервера: %{time}"
+      stimulus_button: "Привітати через Stimulus"

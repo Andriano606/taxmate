@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.7",
+    "sass": "^1.101.0",
+    "vite": "^8.1.3",
+    "vite-plugin-ruby": "^5.2.2"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo": "^8.0.23",
+    "vue": "^3.5.39"
+  }
+}

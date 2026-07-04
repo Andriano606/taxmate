@@ -1,0 +1,28 @@
+<% content_for :title, t(".title") %>
+
+<h1><%= t(".greeting") %></h1>
+<p><%= t(".subtitle") %></p>
+<p>
+  <%= t(".locale_label") %>:
+  <%= link_to "EN", root_path(locale: :en) %> ·
+  <%= link_to "UK", root_path(locale: :uk) %>
+</p>
+
+<div class="card">
+  <h2>Turbo</h2>
+  <p><%= t(".turbo_hint") %></p>
+  <%= turbo_frame_tag "clock", src: clock_path, loading: :lazy do %>
+    <p><%= t(".loading") %></p>
+  <% end %>
+</div>
+
+<div class="card" data-controller="hello" data-hello-name-value="TaxMate">
+  <h2>Stimulus</h2>
+  <button type="button" data-action="hello#greet"><%= t(".stimulus_button") %></button>
+  <p data-hello-target="output"></p>
+</div>
+
+<div class="card">
+  <h2>Vue</h2>
+  <div data-vue-component="HelloVue" data-vue-props='{"name":"TaxMate"}'></div>
+</div>

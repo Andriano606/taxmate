@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+# Запускає Rails + Vite dev-сервер разом (Procfile.dev) через foreman.
+exec "foreman", "start", "-f", "Procfile.dev", *ARGV

@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "clock" do %>
+  <p><%= t("pages.home.time_now", time: Time.current.strftime("%H:%M:%S")) %></p>
+<% end %>
