@@ -35,6 +35,14 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libpq-dev libvips libyaml-dev pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Install Node.js 22 + Yarn (потрібні Vite для збірки JS/Vue-ассетів; Node >= 22.12
+# для @vitejs/plugin-vue, тому беремо з NodeSource, а не застарілий з debian).
+ARG NODE_MAJOR=22
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_MAJOR}.x | bash - && \
+    apt-get install --no-install-recommends -y nodejs && \
+    npm install -g yarn@1.22.22 && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
 # Install application gems
 COPY vendor/* ./vendor/
 COPY Gemfile Gemfile.lock ./
@@ -44,6 +52,10 @@ RUN bundle install && \
     # -j 1 disable parallel compilation to avoid a QEMU bug: https://github.com/rails/bootsnap/issues/495
     bundle exec bootsnap precompile -j 1 --gemfile
 
+# Install JavaScript dependencies (окремим шаром для кешування).
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
 # Copy application code
 COPY . .
 
@@ -51,8 +63,12 @@ COPY . .
 # -j 1 disable parallel compilation to avoid a QEMU bug: https://github.com/rails/bootsnap/issues/495
 RUN bundle exec bootsnap precompile -j 1 app/ lib/
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY.
+# Для vite_rails цей крок запускає `vite build` → потрібні node_modules (вище).
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
+# node_modules у рантаймі не потрібні (ассети вже зібрані) — прибираємо, щоб не роздувати образ.
+RUN rm -rf node_modules
 
 
 
