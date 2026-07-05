@@ -12,9 +12,10 @@ pre-push:
     uncommitted_files:
       files: git diff --name-only
       run: echo "You have uncommitted files please commit or stash these before pushing" && exit 1
+    # Весь проєкт (як у CI) — інакше файли без розширення (Gemfile, Rakefile,
+    # config.ru) і незмінені теки повз хук проходять, а в CI падають.
     rubocop:
-      glob: "*.{rb,rake}"
-      run: bundle exec rubocop --force-exclusion {files}
+      run: bin/rubocop -f github
     js-lint:
       glob: "*.{js,ts,mjs,vue}"
       # Виправити помилки:  yarn prettier --write {files}
@@ -25,8 +26,7 @@ fixer:
   parallel: true
   commands:
     rubocop:
-      glob: "*.{rb,rake}"
-      run: bundle exec rubocop -A --force-exclusion {files}
+      run: bin/rubocop -A
     js-lint:
       glob: "*.{js,ts,mjs,vue}"
       run: yarn prettier --write {files}
