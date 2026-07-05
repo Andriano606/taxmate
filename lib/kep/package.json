@@ -1,0 +1,9 @@
+{
+  "name": "taxmate-kep-signer",
+  "private": true,
+  "description": "КЕП-підписувач (ДСТУ 4145) для авторизації в API ДПС",
+  "dependencies": {
+    "gost89": "^0.1.11",
+    "jkurwa": "^1.21.11"
+  }
+}

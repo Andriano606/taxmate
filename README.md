@@ -17,6 +17,12 @@ Rails 8.1 + Ruby 3.4.8 застосунок. Порожній старт із He
 | Тести | **RSpec** + **Cucumber** (Capybara) |
 | Деплой | **Kamal** (`config/deploy.yml`) |
 
+## Тулчейн
+
+Версії закріплені в `.tool-versions` (asdf): **Ruby 3.4.8, Node 22.22.3, Yarn 1.22.22**.
+JS-менеджер — **yarn** (є `yarn.lock`; npm не використовувати). ⚠️ Node ≥ 22.12 обов'язковий —
+`@vitejs/plugin-vue` не працює на старіших. Після клону: `asdf install` (підтягне всі три).
+
 ## Запуск (розробка)
 
 ```bash
@@ -24,7 +30,7 @@ Rails 8.1 + Ruby 3.4.8 застосунок. Порожній старт із He
 docker compose up -d
 
 # 2. Гем/JS-залежності та БД
-bin/setup            # або: bundle install && npm install && bin/rails db:prepare
+bin/setup            # або: bundle install && yarn install && bin/rails db:prepare
 
 # 3. Запустити застосунок (Rails + Vite разом)
 bin/dev
