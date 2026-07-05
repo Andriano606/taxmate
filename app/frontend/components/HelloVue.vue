@@ -6,14 +6,16 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
 
 const props = defineProps({
   name: { type: String, default: 'світ' },
-})
+});
 
-const count = ref(0)
-const message = computed(() => `Привіт, ${props.name}! Це окремий Vue-компонент.`)
+const count = ref(0);
+const message = computed(
+  () => `Привіт, ${props.name}! Це окремий Vue-компонент.`,
+);
 </script>
 
 <style scoped>

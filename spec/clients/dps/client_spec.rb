@@ -19,13 +19,13 @@ RSpec.describe Dps::Client do
 
   it "fetches settlements for a year" do
     stub_request(:get, "#{base}/ta/splatp?year=2026")
-      .to_return(status: 200, body: [{ "namePlt" => "ЄП", "debtAll" => 0 }].to_json)
+      .to_return(status: 200, body: [ { "namePlt" => "ЄП", "debtAll" => 0 } ].to_json)
     expect(client.settlements(year: 2026).first["debtAll"]).to eq(0)
   end
 
   it "fetches the declarations list" do
     stub_request(:get, "#{base}/reg_doc/list?periodYear=2026")
-      .to_return(status: 200, body: { "content" => [{ "doc" => "F0103309" }] }.to_json)
+      .to_return(status: 200, body: { "content" => [ { "doc" => "F0103309" } ] }.to_json)
     expect(client.declarations(year: 2026)["content"].first["doc"]).to eq("F0103309")
   end
 

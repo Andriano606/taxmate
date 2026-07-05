@@ -10,8 +10,8 @@ RSpec.describe Monobank::Client do
       "accounts" => [
         { "id" => "usd1", "type" => "fop", "currencyCode" => 840 },
         { "id" => "uah1", "type" => "fop", "currencyCode" => 980 },
-        { "id" => "black1", "type" => "black", "currencyCode" => 980 },
-      ],
+        { "id" => "black1", "type" => "black", "currencyCode" => 980 }
+      ]
     }.to_json
   end
 
@@ -39,7 +39,7 @@ RSpec.describe Monobank::Client do
   it "returns only credits (amount > 0)" do
     body = [
       { "amount" => 195936, "counterName" => "Luca Labs As" },
-      { "amount" => -160000, "description" => "conversion" },
+      { "amount" => -160000, "description" => "conversion" }
     ].to_json
     stub_request(:get, %r{\A#{Regexp.escape(base)}/personal/statement/usd1/}).to_return(status: 200, body: body)
     credits = client.credits(account: "usd1", from: 1, to: 2)

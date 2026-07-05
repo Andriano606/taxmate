@@ -10,7 +10,7 @@ RSpec.describe Dps::KepSigner do
   end
 
   it "returns the stripped base64 authorization from the node signer" do
-    allow(Open3).to receive(:capture3).and_return(["MIIbase64==\n", "", status(success: true)])
+    allow(Open3).to receive(:capture3).and_return([ "MIIbase64==\n", "", status(success: true) ])
     expect(signer.authorization("3525511937")).to eq("MIIbase64==")
   end
 
@@ -18,7 +18,7 @@ RSpec.describe Dps::KepSigner do
     captured = nil
     allow(Open3).to receive(:capture3) do |env, *cmd, **_opts|
       captured = { env: env, cmd: cmd }
-      ["X", "", status(success: true)]
+      [ "X", "", status(success: true) ]
     end
 
     signer.authorization("3525511937")
@@ -32,7 +32,7 @@ RSpec.describe Dps::KepSigner do
   end
 
   it "raises Dps::Error when the signer fails" do
-    allow(Open3).to receive(:capture3).and_return(["", "bad key", status(success: false, code: 1)])
+    allow(Open3).to receive(:capture3).and_return([ "", "bad key", status(success: false, code: 1) ])
     expect { signer.authorization("1") }.to raise_error(Dps::Error, /bad key/)
   end
 end

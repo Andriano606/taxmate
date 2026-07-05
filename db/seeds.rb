@@ -1,9 +1,21 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+# Seeds для TaxMate через Oaken (модель — ApplyMate/db/seeds.rb).
 #
-# Example:
+# Oaken тягне файли з db/seeds/#{Rails.env}/ — по одному на набір даних.
+# У кожному такому файлі доступний DSL за назвою таблиці, напр.:
 #
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+#   # db/seeds/development/users.rb
+#   users.create :andrii, unique_by: :email, email: "andrii@example.com", ...
+#
+# і тут вмикається порядок завантаження:  Oaken.loader.seed :users
+#
+# Доменних моделей у проєкті ще нема (лише Active Storage) — тож наборів поки
+# немає. Додавай `Oaken.loader.seed :<набір>` нижче в міру появи моделей.
+# Запуск:  bin/rails db:seed
+
+require "benchmark"
+
+time = Benchmark.realtime do
+  # Oaken.loader.seed :users
+end
+
+puts "Time to create seeds: #{time.round(3)} seconds" # rubocop:disable Rails/Output

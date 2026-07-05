@@ -2,7 +2,20 @@
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
 # Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+
+# Компактна вкладеність: `class Dps::Client` замість `module Dps; class Client`.
+# Виняток — config/application.rb: там модуль Taxmate ще не визначений, тож
+# компактний `class Taxmate::Application` впав би на "uninitialized constant Taxmate".
+Style/ClassAndModuleChildren:
+  Enabled: true
+  EnforcedStyle: compact
+  Exclude:
+    - "config/application.rb"
+
+# Одинарні лапки для рядків без інтерполяції.
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+# Максимальна довжина рядка.
+Layout/LineLength:
+  Max: 120

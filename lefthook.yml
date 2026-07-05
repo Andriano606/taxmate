@@ -1,0 +1,32 @@
+# Git hooks for TaxMate (модель — ApplyMate/lefthook.yml, адаптовано під стек taxmate).
+# Стек: Ruby (rubocop-rails-omakase) + Vite/Vue/TS (prettier через yarn).
+# Немає slim / i18n-tasks / typecheck → відповідні хуки прибрано.
+#
+# Ручний запуск авто-фіксів:  bundle exec lefthook run fixer
+
+pre-push:
+  # Хуки застосовуються лише до файлів, змінених відносно main.
+  files: git diff main --name-only
+  parallel: true
+  commands:
+    uncommitted_files:
+      files: git diff --name-only
+      run: echo "You have uncommitted files please commit or stash these before pushing" && exit 1
+    rubocop:
+      glob: "*.{rb,rake}"
+      run: bundle exec rubocop --force-exclusion {files}
+    js-lint:
+      glob: "*.{js,ts,mjs,vue}"
+      # Виправити помилки:  yarn prettier --write {files}
+      run: yarn prettier --check {files}
+
+fixer:
+  files: git diff main --name-only
+  parallel: true
+  commands:
+    rubocop:
+      glob: "*.{rb,rake}"
+      run: bundle exec rubocop -A --force-exclusion {files}
+    js-lint:
+      glob: "*.{js,ts,mjs,vue}"
+      run: yarn prettier --write {files}

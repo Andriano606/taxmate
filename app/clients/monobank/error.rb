@@ -1,4 +1,2 @@
-module Monobank
-  # Помилка виклику monobank Personal API.
-  class Error < StandardError; end
-end
+# Помилка виклику monobank Personal API.
+class Monobank::Error < StandardError; end

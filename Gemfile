@@ -51,6 +51,9 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # Git hooks manager [https://github.com/evilmartians/lefthook]
+  gem "lefthook", require: false
 end
 
 gem "vite_rails", "~> 3.11"
@@ -66,6 +69,9 @@ gem "aws-sdk-s3", require: false
 group :development, :test do
   # Behaviour-driven / example-based testing
   gem "rspec-rails"
+
+  # Seeding with Oaken [https://github.com/kaspth/oaken]
+  gem "oaken"
 end
 
 group :test do
